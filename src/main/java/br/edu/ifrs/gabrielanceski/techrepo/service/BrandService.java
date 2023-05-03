@@ -35,4 +35,8 @@ public class BrandService {
     public boolean existsByName(String name) {
         return brandRepository.existsByName(name);
     }
+
+    public boolean existsById(Long id) {
+        return brandRepository.existsById(id);
+    }
 }
