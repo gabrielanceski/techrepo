@@ -1,0 +1,40 @@
+package br.edu.ifrs.gabrielanceski.techrepo.service;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import br.edu.ifrs.gabrielanceski.techrepo.model.Device;
+import br.edu.ifrs.gabrielanceski.techrepo.repository.DeviceRepository;
+
+@Service
+public class DeviceService {
+    @Autowired
+    private final DeviceRepository deviceRepository;
+
+    public DeviceService(DeviceRepository deviceRepository) {
+        this.deviceRepository = deviceRepository;
+    }
+
+    public Optional<Device> findById(Long id) {
+        return deviceRepository.findById(id);
+    }
+
+    public void save(Device device) {
+        deviceRepository.save(device); 
+    }
+
+    public List<Device> findAll() {
+        return deviceRepository.findAll();
+    }
+
+    public void delete(Long id) {
+        deviceRepository.deleteById(id);
+    }
+
+    public boolean exists(Long id) {
+        return deviceRepository.existsById(id);
+    }
+}
