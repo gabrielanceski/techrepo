@@ -20,16 +20,19 @@ import br.edu.ifrs.gabrielanceski.techrepo.dto.BrandDTO;
 import br.edu.ifrs.gabrielanceski.techrepo.exception.BrandNotFoundException;
 import br.edu.ifrs.gabrielanceski.techrepo.model.Brand;
 import br.edu.ifrs.gabrielanceski.techrepo.service.BrandService;
+import br.edu.ifrs.gabrielanceski.techrepo.service.DeviceService;
 import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("api/v1/brands")
 public class BrandController {
-    @Autowired
     private final BrandService brandService;
+    private final DeviceService deviceService;
 
-    public BrandController(BrandService brandService) {
+    @Autowired
+    public BrandController(BrandService brandService, DeviceService deviceService) {
         this.brandService = brandService;
+        this.deviceService = deviceService;
     }
 
     @GetMapping
@@ -74,5 +77,13 @@ public class BrandController {
                 .orElseThrow(() -> new BrandNotFoundException(brandId));
         brandService.delete(brandId);
         return ResponseEntity.ok(brand);
+    }
+
+    @GetMapping("{brandId}/devices")
+    public ResponseEntity<?> getDevices(@PathVariable("brandId") Long brandId) {
+        if (!brandService.existsById(brandId)) {
+            throw new BrandNotFoundException(brandId);
+        }
+        return ResponseEntity.ok().body(deviceService.findByBrandId(brandId));
     }
 }

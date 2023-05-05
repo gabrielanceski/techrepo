@@ -1,5 +1,6 @@
 package br.edu.ifrs.gabrielanceski.techrepo.service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,9 +12,9 @@ import br.edu.ifrs.gabrielanceski.techrepo.repository.DeviceRepository;
 
 @Service
 public class DeviceService {
-    @Autowired
     private final DeviceRepository deviceRepository;
 
+    @Autowired
     public DeviceService(DeviceRepository deviceRepository) {
         this.deviceRepository = deviceRepository;
     }
@@ -23,7 +24,7 @@ public class DeviceService {
     }
 
     public void save(Device device) {
-        deviceRepository.save(device); 
+        deviceRepository.save(device);
     }
 
     public List<Device> findAll() {
@@ -36,5 +37,10 @@ public class DeviceService {
 
     public boolean exists(Long id) {
         return deviceRepository.existsById(id);
+    }
+
+    public List<Device> findByBrandId(Long brandId) {
+        if (brandId <= 0) return Collections.emptyList();
+        return deviceRepository.findAllByBrandId(brandId);
     }
 }
