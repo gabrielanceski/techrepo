@@ -14,4 +14,7 @@ public interface DeviceRepository extends JpaRepository<Device, Long> {
     @Query("SELECT d FROM devices d WHERE d.brand.id = ?1")
     List<Device> findAllByBrandId(Long brandId);
 
+    @Query("SELECT COUNT(d) > 0 FROM devices d WHERE d.brand.id = ?1")
+    boolean existsByBrandId(Long brandId);
+
 }

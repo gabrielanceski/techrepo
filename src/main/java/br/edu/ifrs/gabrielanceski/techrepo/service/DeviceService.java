@@ -43,4 +43,8 @@ public class DeviceService {
         if (brandId <= 0) return Collections.emptyList();
         return deviceRepository.findAllByBrandId(brandId);
     }
+
+    public boolean existsByBrandId(Long brandId) {
+        return deviceRepository.existsByBrandId(brandId);
+    }
 }
