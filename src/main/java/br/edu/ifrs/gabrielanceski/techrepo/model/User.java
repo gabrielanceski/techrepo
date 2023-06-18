@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import br.edu.ifrs.gabrielanceski.techrepo.model.builder.UserBuilder;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -32,12 +33,12 @@ public class User implements UserDetails {
     private String email;
     @Column(name = "password", nullable = false, length = 255)
     private String password;
-    @Column(name = "firstname", nullable = true, length = 32)
+    @Column(nullable = true, length = 32)
     private String firstName;
-    @Column(name = "lastname", nullable = true, length = 32)
+    @Column(nullable = true, length = 32)
     private String lastName;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private List<Role> roles;
 
