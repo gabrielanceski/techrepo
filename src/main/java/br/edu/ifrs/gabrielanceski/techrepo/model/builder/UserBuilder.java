@@ -8,7 +8,7 @@ import br.edu.ifrs.gabrielanceski.techrepo.model.User;
 
 public class UserBuilder {
     private long id;
-    private String nickname;
+    private String username;
     private String email;
     private String password;
     private String firstName;
@@ -24,8 +24,8 @@ public class UserBuilder {
         return this;
     }
 
-    public UserBuilder nickname(String nickname) {
-        this.nickname = nickname;
+    public UserBuilder username(String username) {
+        this.username = username;
         return this;
     }
 
@@ -77,7 +77,7 @@ public class UserBuilder {
     public User build() {
         User user = new User();
         user.setId(id);
-        user.setNickname(nickname);
+        user.setUsername(username);
         user.setEmail(email);
         user.setPassword(password);
         user.setFirstName(firstName);

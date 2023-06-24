@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.edu.ifrs.gabrielanceski.techrepo.security.AuthenticationRequest;
-import br.edu.ifrs.gabrielanceski.techrepo.security.AuthenticationResponse;
-import br.edu.ifrs.gabrielanceski.techrepo.security.RegisterRequest;
+import br.edu.ifrs.gabrielanceski.techrepo.api.auth.AuthenticationRequest;
+import br.edu.ifrs.gabrielanceski.techrepo.api.auth.AuthenticationResponse;
+import br.edu.ifrs.gabrielanceski.techrepo.api.auth.RegisterRequest;
 import br.edu.ifrs.gabrielanceski.techrepo.service.AuthenticationService;
 
 @RestController

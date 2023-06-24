@@ -7,13 +7,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import br.edu.ifrs.gabrielanceski.techrepo.api.auth.AuthenticationRequest;
+import br.edu.ifrs.gabrielanceski.techrepo.api.auth.AuthenticationResponse;
+import br.edu.ifrs.gabrielanceski.techrepo.api.auth.RegisterRequest;
 import br.edu.ifrs.gabrielanceski.techrepo.jwt.JwtService;
 import br.edu.ifrs.gabrielanceski.techrepo.model.User;
 import br.edu.ifrs.gabrielanceski.techrepo.repository.RoleRepository;
 import br.edu.ifrs.gabrielanceski.techrepo.repository.UserRepository;
-import br.edu.ifrs.gabrielanceski.techrepo.security.AuthenticationRequest;
-import br.edu.ifrs.gabrielanceski.techrepo.security.AuthenticationResponse;
-import br.edu.ifrs.gabrielanceski.techrepo.security.RegisterRequest;
 
 @Service
 public class AuthenticationService {
@@ -35,7 +35,7 @@ public class AuthenticationService {
 
     public AuthenticationResponse register(RegisterRequest request) {
         User user = User.builder()
-                .nickname(request.nickname())
+                .username(request.username())
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
                 .roles(roleRepository.findByName("ROLE_USER"))
