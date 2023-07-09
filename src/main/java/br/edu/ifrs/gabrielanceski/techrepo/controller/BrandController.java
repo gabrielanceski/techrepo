@@ -3,7 +3,6 @@ package br.edu.ifrs.gabrielanceski.techrepo.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,9 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
 
 import br.edu.ifrs.gabrielanceski.techrepo.dto.BrandDTO;
+import br.edu.ifrs.gabrielanceski.techrepo.exception.ResourceNotFoundException;
 import br.edu.ifrs.gabrielanceski.techrepo.model.Brand;
 import br.edu.ifrs.gabrielanceski.techrepo.model.Device;
 import br.edu.ifrs.gabrielanceski.techrepo.service.BrandService;
@@ -42,8 +41,7 @@ public class BrandController {
     @GetMapping("{brandId}")
     public ResponseEntity<Brand> getBrand(@PathVariable("brandId") Long brandId) {
         return ResponseEntity.ok(brandService.findById(brandId)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Marca não encontrada!")));
+                .orElseThrow(() -> new ResourceNotFoundException("Marca não encontrada!")));
     }
 
     @PostMapping

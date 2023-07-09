@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifrs.gabrielanceski.techrepo.dto.DeviceDTO;
+import br.edu.ifrs.gabrielanceski.techrepo.exception.ResourceNotFoundException;
 import br.edu.ifrs.gabrielanceski.techrepo.model.Device;
 import br.edu.ifrs.gabrielanceski.techrepo.service.DeviceService;
 
@@ -25,7 +25,7 @@ import jakarta.validation.Valid;
 @RequestMapping("api/v1/devices")
 public class DeviceController {
     private final DeviceService deviceService;
-    
+
     @Autowired
     public DeviceController(DeviceService deviceService) {
         this.deviceService = deviceService;
@@ -40,14 +40,14 @@ public class DeviceController {
     public ResponseEntity<?> getDevice(@PathVariable("deviceId") Long id) {
         Optional<Device> device = deviceService.findById(id);
         if (device.isEmpty())
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Dispositivo não encontrado.");
+            throw new ResourceNotFoundException("Dispositivo não encontrado.");
         return ResponseEntity.ok(device.get());
     }
 
     @DeleteMapping("{deviceId}")
     public ResponseEntity<?> delete(@PathVariable("deviceId") Long id) {
         if (!deviceService.exists(id))
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Dispositivo não encontrado.");
+            throw new ResourceNotFoundException("Dispositivo não encontrado.");
         deviceService.delete(id);
         return ResponseEntity.ok("Dispositivo removido.");
     }

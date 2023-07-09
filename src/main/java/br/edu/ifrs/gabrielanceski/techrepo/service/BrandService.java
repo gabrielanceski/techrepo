@@ -2,6 +2,8 @@ package br.edu.ifrs.gabrielanceski.techrepo.service;
 
 import br.edu.ifrs.gabrielanceski.techrepo.repository.BrandRepository;
 import br.edu.ifrs.gabrielanceski.techrepo.dto.BrandDTO;
+import br.edu.ifrs.gabrielanceski.techrepo.exception.ResourceAlreadyExistsException;
+import br.edu.ifrs.gabrielanceski.techrepo.exception.ResourceNotFoundException;
 import br.edu.ifrs.gabrielanceski.techrepo.model.Brand;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -32,7 +34,7 @@ public class BrandService {
 
     public Brand save(BrandDTO dto) {
         if (existsByName(dto.name()))
-            throw new ResponseStatusException(HttpStatus.CONFLICT, "Marca já existente!");
+            throw new ResourceAlreadyExistsException("Marca já cadastrada!");
         Brand brand = new Brand();
         brand.setName(dto.name());
         brandRepository.save(brand);
@@ -41,7 +43,7 @@ public class BrandService {
 
     public Brand update(Long id, BrandDTO dto) {
         Brand brand = findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Marca não encontrada!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Marca não encontrada!"));
         brand.setName(dto.name());
         brandRepository.save(brand);
         return brand;
@@ -49,9 +51,9 @@ public class BrandService {
 
     public Brand delete(Long id) {
         if (id <= 0)
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "ID inválido!");
+            throw new ResourceNotFoundException("Marca não encontrada!");
         Brand brand = findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Marca não encontrada!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Marca não encontrada!"));
         if (deviceService.existsByBrandId(id))
             throw new ResponseStatusException(
                     HttpStatus.CONFLICT, "Esta marca possui dispositivos cadastrados!");

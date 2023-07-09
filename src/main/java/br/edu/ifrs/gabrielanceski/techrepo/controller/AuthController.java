@@ -11,6 +11,7 @@ import br.edu.ifrs.gabrielanceski.techrepo.api.auth.AuthenticationRequest;
 import br.edu.ifrs.gabrielanceski.techrepo.api.auth.AuthenticationResponse;
 import br.edu.ifrs.gabrielanceski.techrepo.api.auth.RegisterRequest;
 import br.edu.ifrs.gabrielanceski.techrepo.service.AuthenticationService;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/v1/auth")
@@ -23,12 +24,12 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
+    public ResponseEntity<AuthenticationResponse> register(@RequestBody @Valid RegisterRequest request) {
         return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthenticationResponse> login(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<AuthenticationResponse> login(@RequestBody @Valid AuthenticationRequest request) {
         return ResponseEntity.ok(authService.login(request));
     }
     

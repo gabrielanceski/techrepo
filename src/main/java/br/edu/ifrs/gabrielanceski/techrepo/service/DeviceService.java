@@ -5,11 +5,11 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
 
 import br.edu.ifrs.gabrielanceski.techrepo.dto.DeviceDTO;
+import br.edu.ifrs.gabrielanceski.techrepo.exception.ResourceAlreadyExistsException;
+import br.edu.ifrs.gabrielanceski.techrepo.exception.ResourceNotFoundException;
 import br.edu.ifrs.gabrielanceski.techrepo.model.Brand;
 import br.edu.ifrs.gabrielanceski.techrepo.model.Device;
 import br.edu.ifrs.gabrielanceski.techrepo.repository.BrandRepository;
@@ -31,8 +31,10 @@ public class DeviceService {
     }
 
     public Device save(DeviceDTO dto) {
+        if (deviceRepository.existsByName(dto.name()))
+            throw new ResourceAlreadyExistsException("Dispositivo já cadastrado!");
         Brand brand = brandRepository.findById(dto.brandId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Marca não encontrada!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Marca não encontrada!"));
         Device device = new Device();
         device.setName(dto.name());
         device.setModel(dto.model());
@@ -44,9 +46,9 @@ public class DeviceService {
 
     public Device update(Long id, DeviceDTO dto) {
         Device device = findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Dispositivo não encontrado!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Dispositivo não encontrado!"));
         Brand brand = brandRepository.findById(dto.brandId())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Marca não encontrada!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Marca não encontrada!"));
         device.setName(dto.name());
         device.setModel(dto.model());
         device.setBrand(brand);
@@ -71,8 +73,7 @@ public class DeviceService {
         if (brandId <= 0)
             return Collections.emptyList();
         if (!brandRepository.existsById(brandId))
-            throw new ResponseStatusException(
-                    HttpStatus.NOT_FOUND, "Marca não encontrada!");
+            throw new ResourceNotFoundException("Marca não encontrada!");
         return deviceRepository.findAllByBrandId(brandId);
     }
 
