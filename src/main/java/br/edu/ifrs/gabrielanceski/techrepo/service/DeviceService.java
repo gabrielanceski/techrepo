@@ -80,4 +80,8 @@ public class DeviceService {
     public boolean existsByBrandId(Long brandId) {
         return deviceRepository.existsByBrandId(brandId);
     }
+
+    public Long countByBrandId(Long brandId) {
+        return deviceRepository.countByBrandId(brandId);
+    }
 }

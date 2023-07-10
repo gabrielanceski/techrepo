@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.edu.ifrs.gabrielanceski.techrepo.api.brands.BrandResponse;
 import br.edu.ifrs.gabrielanceski.techrepo.dto.BrandDTO;
 import br.edu.ifrs.gabrielanceski.techrepo.exception.ResourceNotFoundException;
 import br.edu.ifrs.gabrielanceski.techrepo.model.Brand;
@@ -34,7 +35,7 @@ public class BrandController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Brand>> getBrands() {
+    public ResponseEntity<List<BrandResponse>> getBrands() {
         return ResponseEntity.ok(brandService.findAll());
     }
 
