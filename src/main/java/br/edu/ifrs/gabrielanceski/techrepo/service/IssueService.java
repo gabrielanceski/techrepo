@@ -39,7 +39,7 @@ public class IssueService {
     public List<IssueResponse> findAll() {
         return issueRepository.findAll().stream().map(issue -> {
                 return new IssueResponse(
-                        issue.getId(),
+                        issue.getId().toString(),
                         issue.getChassis(),
                         issue.getCause(),
                         issue.getReportedIssue(),
@@ -55,7 +55,7 @@ public class IssueService {
 
     public IssueResponse save(IssueRequest issueRequest) {
         Issue issue = new Issue();
-        issue.setId(UUID.fromString(issueRequest.id()));
+        if (issueRequest.id() != null) issue.setId(UUID.fromString(issueRequest.id()));
         issue.setChassis(issueRequest.chassis());
         issue.setCause(issueRequest.cause());
         issue.setReportedIssue(issueRequest.reportedIssue());
@@ -70,7 +70,7 @@ public class IssueService {
         issueRepository.save(issue);
 
         return new IssueResponse(
-                issue.getId(),
+                issue.getId().toString(),
                 issue.getChassis(),
                 issue.getCause(),
                 issue.getReportedIssue(),
@@ -83,13 +83,11 @@ public class IssueService {
         );
     }
 
-    
-    // Delete Issue
     public IssueResponse delete(UUID issueId) {
         Issue issue = issueRepository.findById(issueId).orElseThrow(() -> new ResourceNotFoundException("Issue not found!"));
         issueRepository.delete(issue);
         return new IssueResponse(
-                issue.getId(),
+                issue.getId().toString(),
                 issue.getChassis(),
                 issue.getCause(),
                 issue.getReportedIssue(),

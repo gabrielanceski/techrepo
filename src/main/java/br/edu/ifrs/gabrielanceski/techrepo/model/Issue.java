@@ -37,10 +37,7 @@ public class Issue {
     private String reportedIssue;
     @Column(name = "found_issue", nullable = true, length = 255)
     private String foundIssue;
-
-    @Column(name = "rating", nullable = false, length = 1)
-    private Integer rating;
-
+    
     @CreatedDate
     private LocalDateTime createdAt;
     @LastModifiedDate
