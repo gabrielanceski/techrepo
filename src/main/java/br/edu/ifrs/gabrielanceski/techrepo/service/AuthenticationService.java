@@ -1,5 +1,7 @@
 package br.edu.ifrs.gabrielanceski.techrepo.service;
 
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,6 +16,7 @@ import br.edu.ifrs.gabrielanceski.techrepo.jwt.JwtService;
 import br.edu.ifrs.gabrielanceski.techrepo.model.User;
 import br.edu.ifrs.gabrielanceski.techrepo.repository.RoleRepository;
 import br.edu.ifrs.gabrielanceski.techrepo.repository.UserRepository;
+import io.jsonwebtoken.lang.Maps;
 
 @Service
 public class AuthenticationService {
@@ -41,7 +44,9 @@ public class AuthenticationService {
                 .roles(roleRepository.findByName("ROLE_USER"))
                 .build();
         userRepository.save(user);
-        String token = jwtService.generateToken(user);
+        
+        Map<String, Object> extraClaims = Maps.of("id", (Object) user.getId()).build();
+        String token = jwtService.generateToken(extraClaims, user);
         AuthenticationResponse response = new AuthenticationResponse(token);
         return response;
     }
@@ -51,7 +56,8 @@ public class AuthenticationService {
                 new UsernamePasswordAuthenticationToken(request.email(), request.password()));
         User user = userRepository.findByEmail(request.email())
                 .orElseThrow(() -> new UsernameNotFoundException("Usuário não encontrado!"));
-        String token = jwtService.generateToken(user);
+        Map<String, Object> extraClaims = Maps.of("id", (Object) user.getId()).build();
+        String token = jwtService.generateToken(extraClaims, user);
         AuthenticationResponse response = new AuthenticationResponse(token);
         return response;
     }
