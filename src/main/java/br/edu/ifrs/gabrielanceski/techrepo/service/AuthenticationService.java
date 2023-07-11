@@ -42,6 +42,9 @@ public class AuthenticationService {
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
                 .roles(roleRepository.findByName("ROLE_USER"))
+                .accountNonExpired(true)
+                .accountNonLocked(true)
+                .credentialsNonExpired(true)
                 .build();
         userRepository.save(user);
         

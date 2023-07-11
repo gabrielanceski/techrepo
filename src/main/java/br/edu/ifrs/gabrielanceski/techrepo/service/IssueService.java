@@ -46,7 +46,7 @@ public class IssueService {
                         issue.getFoundIssue(), 
                         issue.getStatus(), 
                         issue.getAuthor().getId(), 
-                        issue.getDevice().getId(),
+                        issue.getDevice(),
                         issue.getCreatedAt(), 
                         issue.getUpdatedAt()
                 );
@@ -77,7 +77,7 @@ public class IssueService {
                 issue.getFoundIssue(), 
                 issue.getStatus(), 
                 issue.getAuthor().getId(), 
-                issue.getDevice().getId(),
+                issue.getDevice(),
                 issue.getCreatedAt(), 
                 issue.getUpdatedAt()
         );
@@ -94,7 +94,7 @@ public class IssueService {
                 issue.getFoundIssue(), 
                 issue.getStatus(), 
                 issue.getAuthor().getId(), 
-                issue.getDevice().getId(),
+                issue.getDevice(),
                 issue.getCreatedAt(), 
                 issue.getUpdatedAt()
         );
