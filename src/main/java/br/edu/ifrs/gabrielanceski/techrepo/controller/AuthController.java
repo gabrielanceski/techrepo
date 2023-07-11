@@ -2,6 +2,7 @@ package br.edu.ifrs.gabrielanceski.techrepo.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,7 @@ import br.edu.ifrs.gabrielanceski.techrepo.service.AuthenticationService;
 import jakarta.validation.Valid;
 
 @RestController
+@CrossOrigin("*")
 @RequestMapping("/api/v1/auth")
 public class AuthController {
     private final AuthenticationService authService;
